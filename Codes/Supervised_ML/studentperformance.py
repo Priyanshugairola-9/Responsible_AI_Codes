@@ -60,7 +60,7 @@ print("R2 Score:", round(r2, 4))
 
 #-----------------------------------------------------------------------------------------------------------------------------------------
 # separate training and testing split data for the classification algorithms
-y_classification = (df["Exam_Score"] >= 70).astype(int)
+y_classification = (df["Exam_Score"] >= 67).astype(int)
 X_train_cls, X_test_cls, y_train_cls, y_test_cls = (train_test_split(X,y_classification,test_size=0.20,random_state=42,stratify=y_classification))
 
 scaler = StandardScaler()
@@ -74,11 +74,19 @@ logistic_model = LogisticRegression(max_iter=1000)
 logistic_model.fit(X_train_scaled, y_train_cls)
 logistic_predictions = logistic_model.predict(X_test_scaled)
 logistic_accuracy = accuracy_score(y_test_cls, logistic_predictions)
+logistic_precision = precision_score(y_test_cls, logistic_predictions, zero_division=0)
+logistic_recall = recall_score(y_test_cls, logistic_predictions, zero_division=0)
+logistic_f1 = f1_score(y_test_cls, logistic_predictions, zero_division=0)
+logistic_cm = confusion_matrix(y_test_cls, logistic_predictions)
+
 print("Accuracy:", round(logistic_accuracy * 100, 2), "%")
+print("Precision:", round(logistic_precision, 4))
+print("Recall:", round(logistic_recall, 4))
+print("F1 Score:", round(logistic_f1, 4))
 print("\nClassification Report:")
 print(classification_report(y_test_cls,logistic_predictions,zero_division=0))
 print("Confusion Matrix:")
-print(confusion_matrix(y_test_cls, logistic_predictions))
+print(logistic_cm)
 
 #-----------------------------------------------------------------------------------------------------------------------------------------
 print("\n")
@@ -87,11 +95,19 @@ knn_model = KNeighborsClassifier(n_neighbors=5)
 knn_model.fit(X_train_scaled, y_train_cls)
 knn_predictions = knn_model.predict(X_test_scaled)
 knn_accuracy = accuracy_score(y_test_cls, knn_predictions)
+knn_precision = precision_score(y_test_cls, knn_predictions, zero_division=0)
+knn_recall = recall_score(y_test_cls, knn_predictions, zero_division=0)
+knn_f1 = f1_score(y_test_cls, knn_predictions, zero_division=0)
+knn_cm = confusion_matrix(y_test_cls, knn_predictions)
+
 print("Accuracy:", round(knn_accuracy * 100, 2), "%")
+print("Precision:", round(knn_precision, 4))
+print("Recall:", round(knn_recall, 4))
+print("F1 Score:", round(knn_f1, 4))
 print("\nClassification Report:")
 print(classification_report(y_test_cls,knn_predictions,zero_division=0))
 print("Confusion Matrix:")
-print(confusion_matrix(y_test_cls, knn_predictions))
+print(knn_cm)
 
 #-----------------------------------------------------------------------------------------------------------------------------------------
 print("\n")
@@ -100,10 +116,18 @@ svm_model = SVC(kernel="rbf")
 svm_model.fit(X_train_scaled, y_train_cls)
 svm_predictions = svm_model.predict(X_test_scaled)
 svm_accuracy = accuracy_score(y_test_cls, svm_predictions)
+svm_precision = precision_score(y_test_cls, svm_predictions, zero_division=0)
+svm_recall = recall_score(y_test_cls, svm_predictions, zero_division=0)
+svm_f1 = f1_score(y_test_cls, svm_predictions, zero_division=0)
+svm_cm = confusion_matrix(y_test_cls, svm_predictions)
+
 print("Accuracy:", round(svm_accuracy * 100, 2), "%")
+print("Precision:", round(svm_precision, 4))
+print("Recall:", round(svm_recall, 4))
+print("F1 Score:", round(svm_f1, 4))
 print("\nClassification Report:")
 print(classification_report(y_test_cls,svm_predictions,zero_division=0))
 print("Confusion Matrix:")
-print(confusion_matrix(y_test_cls, svm_predictions))
+print(svm_cm)
 
-#-----------------------------------------------------------------------------------------------------------------------------------------" 
+#-----------------------------------------------------------------------------------------------------------------------------------------
