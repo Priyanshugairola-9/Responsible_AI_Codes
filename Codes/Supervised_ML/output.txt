@@ -105,6 +105,9 @@ R2 Score: 0.7699
 
 LOGISTIC REGRESSION
 Accuracy: 97.96 %
+Precision: 0.9825
+Recall: 0.9812
+F1 Score: 0.9819
 
 Classification Report:
               precision    recall  f1-score   support
@@ -124,6 +127,9 @@ Confusion Matrix:
 
 K-NEAREST NEIGHBORS
 Accuracy: 73.68 %
+Precision: 0.7497
+Recall: 0.8
+F1 Score: 0.774
 
 Classification Report:
               precision    recall  f1-score   support
@@ -143,6 +149,9 @@ Confusion Matrix:
 
 SUPPORT VECTOR MACHINE
 Accuracy: 95.61 %
+Precision: 0.9661
+Recall: 0.9557
+F1 Score: 0.9609
 
 Classification Report:
               precision    recall  f1-score   support
