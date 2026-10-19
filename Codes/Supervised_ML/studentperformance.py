@@ -1,10 +1,10 @@
 import pandas as pd
 import numpy as np
-
-from sklearn.linear_model import LinearRegression
+
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
+from sklearn.ensemble import RandomForestClassifier
 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -43,21 +43,7 @@ X = pd.get_dummies(X, dtype=int)
 print(X.head())
 
 X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.20,random_state=42)  #split dataset into 80(training) 20(testing)
-
-#-----------------------------------------------------------------------------------------------------------------------------------------
-print("\nLINEAR REGRESSION")
-linear_model = LinearRegression()
-linear_model.fit(X_train, y_train)
-linear_predictions = linear_model.predict(X_test)
-#evaluation metrics
-mae = mean_absolute_error(y_test,linear_predictions)
-mse = mean_squared_error(y_test,linear_predictions)
-r2 = r2_score(y_test,linear_predictions)
-
-print("MAE:", round(mae, 2))
-print("MSE:", round(mse, 2))
-print("R2 Score:", round(r2, 4))
-
+
 #-----------------------------------------------------------------------------------------------------------------------------------------
 # separate training and testing split data for the classification algorithms
 y_classification = (df["Exam_Score"] >= 67).astype(int)
@@ -131,3 +117,27 @@ print("Confusion Matrix:")
 print(svm_cm)
 
 #-----------------------------------------------------------------------------------------------------------------------------------------
+
+print("\nRANDOM FOREST CLASSIFIER")
+
+random_forest_model = RandomForestClassifier(n_estimators=100,random_state=42)
+random_forest_model.fit(X_train, y_train)
+random_forest_predictions = random_forest_model.predict(X_test)
+random_forest_accuracy = accuracy_score(y_test, random_forest_predictions)
+random_forest_precision = precision_score(y_test, random_forest_predictions, zero_division=0)
+random_forest_recall = recall_score(y_test, random_forest_predictions, zero_division=0)
+random_forest_f1 = f1_score(y_test, random_forest_predictions, zero_division=0)
+random_forest_cm = confusion_matrix(y_test, random_forest_predictions)
+
+print("Accuracy:", round(random_forest_accuracy * 100, 2), "%")
+print("Precision:", round(random_forest_precision, 4))
+print("Recall:", round(random_forest_recall, 4))
+print("F1 Score:", round(random_forest_f1, 4))
+
+print("\nClassification Report:")
+print(classification_report(y_test, random_forest_predictions, zero_division=0))
+
+print("Confusion Matrix:")
+print(random_forest_cm)
+
+# -------------------------------------------------------------------------
