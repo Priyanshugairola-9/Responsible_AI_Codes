@@ -96,11 +96,6 @@ Column names:
 
 [5 rows x 40 columns]
 
-LINEAR REGRESSION
-MAE: 0.45
-MSE: 3.25
-R2 Score: 0.7699
-
 
 
 LOGISTIC REGRESSION
@@ -166,3 +161,23 @@ weighted avg       0.96      0.96      0.96      1322
 Confusion Matrix:
 [[552  25]
  [ 33 712]]
+
+RANDOM FOREST CLASSIFIER
+Accuracy: 89.86 %
+Precision: 0.8962
+Recall: 0.9275
+F1 Score: 0.9116
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.90      0.86      0.88       577
+           1       0.90      0.93      0.91       745
+
+    accuracy                           0.90      1322
+   macro avg       0.90      0.89      0.90      1322
+weighted avg       0.90      0.90      0.90      1322
+
+Confusion Matrix:
+[[497  80]
+ [ 54 691]]
