@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-
+
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
@@ -13,10 +13,6 @@ from sklearn.metrics import accuracy_score
 from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
 from sklearn.metrics import f1_score
-
-from sklearn.metrics import mean_absolute_error
-from sklearn.metrics import mean_squared_error
-from sklearn.metrics import r2_score
 
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
@@ -33,21 +29,18 @@ print(df.columns.tolist())
 if "Exam_Score" not in df.columns:
     raise ValueError("Exam_Score column not found")
 
-df["Exam_Score"]=pd.to_numeric(df["Exam_Score"],errors="coerce")  #errors="coerce" convert invalid score into missing value
-df=df.dropna(subset=["Exam_Score"]).copy()
+df["Exam_Score"] = pd.to_numeric(df["Exam_Score"], errors="coerce")  #errors="coerce" convert invalid score into missing value
+df = df.dropna(subset=["Exam_Score"]).copy()
 
-X=df.drop("Exam_Score",axis=1)
-y=df["Exam_Score"]
+X = df.drop("Exam_Score", axis=1)
+
+# separate training and testing split data for the classification algorithms
+y_classification = (df["Exam_Score"] >= 67).astype(int)
 
 X = pd.get_dummies(X, dtype=int)
 print(X.head())
 
-X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.20,random_state=42)  #split dataset into 80(training) 20(testing)
-
-#-----------------------------------------------------------------------------------------------------------------------------------------
-# separate training and testing split data for the classification algorithms
-y_classification = (df["Exam_Score"] >= 67).astype(int)
-X_train_cls, X_test_cls, y_train_cls, y_test_cls = (train_test_split(X,y_classification,test_size=0.20,random_state=42,stratify=y_classification))
+X_train_cls, X_test_cls, y_train_cls, y_test_cls = train_test_split(X, y_classification, test_size=0.20, random_state=42, stratify=y_classification)  #split dataset into 80(training) 20(testing)
 
 scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train_cls)
@@ -70,7 +63,7 @@ print("Precision:", round(logistic_precision, 4))
 print("Recall:", round(logistic_recall, 4))
 print("F1 Score:", round(logistic_f1, 4))
 print("\nClassification Report:")
-print(classification_report(y_test_cls,logistic_predictions,zero_division=0))
+print(classification_report(y_test_cls, logistic_predictions, zero_division=0))
 print("Confusion Matrix:")
 print(logistic_cm)
 
@@ -91,7 +84,7 @@ print("Precision:", round(knn_precision, 4))
 print("Recall:", round(knn_recall, 4))
 print("F1 Score:", round(knn_f1, 4))
 print("\nClassification Report:")
-print(classification_report(y_test_cls,knn_predictions,zero_division=0))
+print(classification_report(y_test_cls, knn_predictions, zero_division=0))
 print("Confusion Matrix:")
 print(knn_cm)
 
@@ -112,31 +105,28 @@ print("Precision:", round(svm_precision, 4))
 print("Recall:", round(svm_recall, 4))
 print("F1 Score:", round(svm_f1, 4))
 print("\nClassification Report:")
-print(classification_report(y_test_cls,svm_predictions,zero_division=0))
+print(classification_report(y_test_cls, svm_predictions, zero_division=0))
 print("Confusion Matrix:")
 print(svm_cm)
 
 #-----------------------------------------------------------------------------------------------------------------------------------------
-
+print("\n")
 print("\nRANDOM FOREST CLASSIFIER")
-
-random_forest_model = RandomForestClassifier(n_estimators=100,random_state=42)
-random_forest_model.fit(X_train, y_train)
-random_forest_predictions = random_forest_model.predict(X_test)
-random_forest_accuracy = accuracy_score(y_test, random_forest_predictions)
-random_forest_precision = precision_score(y_test, random_forest_predictions, zero_division=0)
-random_forest_recall = recall_score(y_test, random_forest_predictions, zero_division=0)
-random_forest_f1 = f1_score(y_test, random_forest_predictions, zero_division=0)
-random_forest_cm = confusion_matrix(y_test, random_forest_predictions)
+random_forest_model = RandomForestClassifier(n_estimators=100, random_state=42)
+random_forest_model.fit(X_train_cls, y_train_cls)
+random_forest_predictions = random_forest_model.predict(X_test_cls)
+random_forest_accuracy = accuracy_score(y_test_cls, random_forest_predictions)
+random_forest_precision = precision_score(y_test_cls, random_forest_predictions, zero_division=0)
+random_forest_recall = recall_score(y_test_cls, random_forest_predictions, zero_division=0)
+random_forest_f1 = f1_score(y_test_cls, random_forest_predictions, zero_division=0)
+random_forest_cm = confusion_matrix(y_test_cls, random_forest_predictions)
 
 print("Accuracy:", round(random_forest_accuracy * 100, 2), "%")
 print("Precision:", round(random_forest_precision, 4))
 print("Recall:", round(random_forest_recall, 4))
 print("F1 Score:", round(random_forest_f1, 4))
-
 print("\nClassification Report:")
-print(classification_report(y_test, random_forest_predictions, zero_division=0))
-
+print(classification_report(y_test_cls, random_forest_predictions, zero_division=0))
 print("Confusion Matrix:")
 print(random_forest_cm)
 
