@@ -162,22 +162,24 @@ Confusion Matrix:
 [[552  25]
  [ 33 712]]
 
+
+
 RANDOM FOREST CLASSIFIER
 Accuracy: 89.86 %
-Precision: 0.8962
-Recall: 0.9275
-F1 Score: 0.9116
+Precision: 0.8993
+Recall: 0.9235
+F1 Score: 0.9113
 
 Classification Report:
               precision    recall  f1-score   support
 
-           0       0.90      0.86      0.88       577
-           1       0.90      0.93      0.91       745
+           0       0.90      0.87      0.88       577
+           1       0.90      0.92      0.91       745
 
     accuracy                           0.90      1322
-   macro avg       0.90      0.89      0.90      1322
+   macro avg       0.90      0.90      0.90      1322
 weighted avg       0.90      0.90      0.90      1322
 
 Confusion Matrix:
-[[497  80]
- [ 54 691]]
+[[500  77]
+ [ 57 688]]
